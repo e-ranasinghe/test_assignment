@@ -4,12 +4,12 @@ from .forms import PostForm
 from django.contrib.auth.decorators import login_required
 
 
-@login_required(login_url='/accounts/login/')
-def index(request):
-    return render(request, 'hello.html')
+@login_required
+def hello(request):
+    return render(request, 'app/hello.html')
 
 
-@login_required(login_url='/accounts/login/')
+@login_required
 def post_new(request):
     form = PostForm()
     return render(request, 'post.html', {'form': form})

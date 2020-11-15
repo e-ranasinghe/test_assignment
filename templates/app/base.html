@@ -2,23 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>{% block title %}Title{% endblock title %}</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 </head>
+<header>
+  <a href="{% url 'logout' %}">Log out</a> |
+</header>
 <body>
-<div class="content container">
-    <div class="row">
-        <div class="col-md-8">
-            <h2>Log In</h2>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Log In</button>
-            </form>
-        </div>
-    </div>
-</div>
+{% block content %}
+{% endblock content %}
 </body>
 </html>
+

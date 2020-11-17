@@ -3,13 +3,43 @@
 {% block title %} Home {% endblock title %}
 
 {% block content %}
-    {% for post in posts %}
-        <section class="post">
+    <div id="posts">
+        {% include 'app/posts.html' %}
+    </div>
 
-            <h3><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
-            <p>{{ post.content|truncatewords:20 }}</p>
-{#            <span> {{ post.created_at }}</span>#}
-        </section>
-    {% endfor %}
+    <div>
+        <a id="nextPosts" href="javascript:void(0);" data-page="2">More posts</a>
+    </div>
+
+    <script>
+        (function ($) {
+            $('#nextPosts').on('click', function () {
+                var link = $(this);
+                var page = link.data('page');
+
+                $.ajax({
+                    type: 'post',
+                    url: '/next_posts/',
+                    data: {
+                        'page': page,
+                        'csrfmiddlewaretoken': window.CSRF_TOKEN
+                    },
+                    success: function (data) {
+                        if (data.has_next) {
+                            link.data('page', page + 1);
+                        } else {
+                            link.hide();
+                        }
+                        // append html to the posts div
+                        $('#posts').append(data.posts_html);
+                    },
+                    error: function (xhr, status, error) {
+                    }
+                });
+            });
+        }(jQuery));
+    </script>
+
 {% endblock content %}
+
 

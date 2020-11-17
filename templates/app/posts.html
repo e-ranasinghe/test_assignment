@@ -1,0 +1,7 @@
+{% for post in posts %}
+    <div>
+        <h3><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
+        <p>{{ post.content|truncatewords:20 }}</p>
+        {#            <span> {{ post.created_at }}</span>#}
+    </div>
+{% endfor %}

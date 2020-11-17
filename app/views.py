@@ -1,10 +1,12 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from .forms import PostForm
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import JsonResponse
 from django.shortcuts import redirect
-from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
+from django.template import loader
+from django.utils import timezone
+
+from .forms import PostForm
 from .models import Post
 
 
@@ -12,6 +14,26 @@ from .models import Post
 def hello(request):
     posts = Post.objects.filter(published=True).order_by('-created_at')[:3]
     return render(request, 'app/hello.html', {'posts': posts})
+
+
+@login_required
+def next_posts(request):
+    page = request.POST.get('page')
+    posts = Post.objects.filter(published=True).order_by('-created_at')
+
+    results_per_page = 3
+    paginator = Paginator(posts, results_per_page)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(2)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    posts_html = loader.render_to_string('app/posts.html', {'posts': posts})
+
+    output_data = {'posts_html': posts_html, 'has_next': posts.has_next()}
+    return JsonResponse(output_data)
 
 
 @login_required

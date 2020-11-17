@@ -10,7 +10,8 @@ from .models import Post
 
 @login_required
 def hello(request):
-    return render(request, 'app/hello.html')
+    posts = Post.objects.filter(published=True).order_by('-created_at')[:3]
+    return render(request, 'app/hello.html', {'posts': posts})
 
 
 @login_required

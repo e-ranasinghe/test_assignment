@@ -8,11 +8,15 @@
     <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<div class="page-header">
-    <a href="{% url 'logout' %}">Log out</a> | <a href="{% url 'post_new' %}">New post</a>
-</div>
 <div class="content container">
     <div class="row">
+        <div class="page-header">
+            <h3>Hello {{ user.username }}!</h3>
+            <a href="{% url 'hello' %}">Home</a> |
+            <a href="{% url 'post_new' %}">New post</a> |
+            <a href="{% url 'logout' %}">Log out</a>
+        </div>
+
         <div class="col-md-8">
             {% block content %}
             {% endblock content %}

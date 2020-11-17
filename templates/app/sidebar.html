@@ -1,0 +1,65 @@
+{#{% extends 'app/base.html' %}#}
+
+{#{% block title %} Home {% endblock title %}#}
+
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        background-color: #fdfdfd;
+    }
+
+    .card {
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
+</style>
+
+{% block sidebar %}
+    <div class="col-md-4 float-right ">
+        <div id="posts" class="card my-4">
+            <h5 class="card-header">Recent Posts</h5>
+            {% for post in posts %}
+                <div class="card-body">
+                    <h4 class="card-title"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h4>
+                    <p class="card-text text">{{ post.content|truncatewords:20 }}</p>
+                    {#                                    <span> {{ post.created_at }}</span>#}
+                </div>
+            {% endfor %}
+        </div>
+        <div>
+            <a id="nextPosts" href="javascript:void(0);" data-page="2">More posts</a>
+        </div>
+    </div>
+
+    <script>
+        (function ($) {
+            $('#nextPosts').on('click', function () {
+                var link = $(this);
+                var page = link.data('page');
+
+                $.ajax({
+                    type: 'post',
+                    url: '/next_posts/',
+                    data: {
+                        'page': page,
+                        'csrfmiddlewaretoken': window.CSRF_TOKEN
+                    },
+                    success: function (data) {
+                        if (data.has_next) {
+                            link.data('page', page + 1);
+                        } else {
+                            link.hide();
+                        }
+                        // append html to the posts div
+                        $('#posts').append(data.posts_html);
+                    },
+                    error: function (xhr, status, error) {
+                    }
+                });
+            });
+        }(jQuery));
+    </script>
+
+{% endblock sidebar %}
+
+

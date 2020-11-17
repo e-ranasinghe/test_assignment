@@ -1,0 +1,16 @@
+{% extends 'app/base.html' %}
+
+{% block title %} Post {% endblock title %}
+
+{% block content %}
+    <div class="post">
+        {% if post.published %}
+            <div class="date">
+                {{ post.created_at }}
+            </div>
+            <h1>{{ post.title }}</h1>
+            <p><em>by {{ post.user|linebreaksbr }}</em></p><br>
+            <p>{{ post.content|linebreaksbr }}</p>
+        {% endif %}
+    </div>
+{% endblock %}

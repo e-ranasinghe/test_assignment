@@ -8,7 +8,7 @@
 git clone https://github.com/e-ranasinghe/test_assignment.git
 ```
 
-2. Create and start a virtual environment:
+2. Create and start a virtual environment in project folder:
 
 ```bash
 python3 -m venv env
@@ -31,4 +31,12 @@ python manage.py migrate
 
 ```bash
 python manage.py runserver
+```
+
+6. Open localhost:8000 on your browser to view the app.
+
+```bash
+Use user for testing: 
+login: eric 
+password: 1234
 ```

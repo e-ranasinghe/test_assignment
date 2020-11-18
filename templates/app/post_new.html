@@ -5,14 +5,16 @@
 
 {% block content %}
     <div class="container">
-        <div class="col-md-8 card mb-4  mt-3 left  top">
-            <div class="card-body">
-                <h1>New post</h1>
-                <form method="POST" class="post-form">{% csrf_token %}
-                    {{ form|crispy }}
-                    <button type="submit" class="save btn btn-default">Save</button>
-                </form>
+        <div class="row justify-content-center">
+            <div class="card my-4 content-main ">
+                <h2 class="card-header">New Post</h2>
+                <div class="card-body">
+                    <form method="POST" class="post-form">{% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="save btn btn-default">Save</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-{% endblock %}
+{% endblock content %}

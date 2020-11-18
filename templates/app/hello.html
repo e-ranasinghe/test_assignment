@@ -1,33 +1,28 @@
-{#{% extends 'app/base.html' %}#}
+{% extends 'app/base.html' %}
 
-{#{% block title %} Home {% endblock title %}#}
+{% block title %} Home {% endblock title %}
 
-<style>
-    body {
-        font-family: "Roboto", sans-serif;
-        font-size: 18px;
-        background-color: #fdfdfd;
-    }
+{% block content %}
 
-    .card {
-        box-shadow: 0 16px 48px #E3E7EB;
-    }
-</style>
-
-{% block sidebar %}
-    <div class="col-md-4 float-right ">
-        <div id="posts" class="card my-4">
-            <h5 class="card-header">Recent Posts</h5>
-            {% for post in posts %}
-                <div class="card-body">
-                    <h4 class="card-title"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h4>
-                    <p class="card-text text">{{ post.content|truncatewords:20 }}</p>
-                    {#                                    <span> {{ post.created_at }}</span>#}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="card my-4 content-main ">
+            <h4 class="card-header">Recent Posts</h4>
+                <div id="posts" class="card-body">
+                    {% for post in posts %}
+                        <div class="card-body">
+                            <h4 class="card-title"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
+                            </h4>
+                            <p class="card-text">{{ post.content|truncatewords:20 }}</p>
+                            {#                                    <span> {{ post.created_at }}</span>#}
+                            <div class="border-top my-3"></div>
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            </div>
         </div>
         <div>
-            <a id="nextPosts" href="javascript:void(0);" data-page="2">More posts</a>
+            <a class="btn btn-info mb-3" id="nextPosts" href="javascript:void(0);" data-page="2">More posts</a>
         </div>
     </div>
 
@@ -60,6 +55,5 @@
         }(jQuery));
     </script>
 
-{% endblock sidebar %}
-
+{% endblock content %}
 

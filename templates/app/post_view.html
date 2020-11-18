@@ -4,13 +4,36 @@
 
 {% block content %}
     <div class="container">
-        <div class="col-md-8 card mb-4 mt-3 left top">
-            <div class="card-body">
-                {% if post.published %}
-                    <h1>{{ post.title }}</h1>
-                    <p class="text-muted">{{ post.user }} | {{ post.created_at }}</p>
-                    <p class="card-text ">{{ post.content|linebreaksbr }}</p>
-                {% endif %}
+        <div class="row">
+
+            <div class="col-md-4">
+                <div id="posts" class="card my-4 ">
+                    <h4 class="card-header">Recent Posts</h4>
+                    {% for post in posts %}
+                        <div class="card-body">
+                            {% if curr_post.pk == post.pk %}
+                                <h4 class="card-title"><a href="{% url 'post_detail' pk=post.pk %}"><b>{{ post.title }}</b>
+                            {% else %}
+                                <h4 class="card-title"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}
+                            {% endif %}
+                            </a>
+                            </h4>
+                            <p class="card-text ">{{ post.content|truncatewords:20 }}</p>
+                            {#                                    <span> {{ post.created_at }}</span>#}
+                            <div class="border-top my-3"></div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-md-8 card my-4 ">
+                <div class="card-body">
+                    {% if curr_post.published %}
+                        <h1>{{ curr_post.title }}</h1>
+                        <p class="text-muted">{{ curr_post.user }} | {{ curr_post.created_at }}</p>
+                        <p class="card-text ">{{ curr_post.content|linebreaksbr }}</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

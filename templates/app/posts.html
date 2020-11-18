@@ -1,7 +1,8 @@
 {% for post in posts %}
     <div class="card-body">
-        <h3 class="card-title"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
+        <h4 class="card-title"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h4>
         <p class="card-text">{{ post.content|truncatewords:20 }}</p>
 {#                                    <span> {{ post.created_at }}</span>#}
+    <div class="border-top my-3"></div>
     </div>
 {% endfor %}

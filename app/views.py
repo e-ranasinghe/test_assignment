@@ -13,7 +13,7 @@ from .models import Post
 @login_required
 def hello(request):
     posts = Post.objects.filter(published=True).order_by('-created_at')[:3]
-    return render(request, 'app/base.html', {'posts': posts})
+    return render(request, 'app/hello.html', {'posts': posts})
 
 
 @login_required
@@ -38,7 +38,6 @@ def next_posts(request):
 
 @login_required
 def post_new(request):
-    posts = Post.objects.filter(published=True).order_by('-created_at')[:3]
     if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
@@ -50,11 +49,11 @@ def post_new(request):
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
-    return render(request, 'app/post_new.html', {'form': form, 'posts': posts})
+    return render(request, 'app/post_new.html', {'form': form})
 
 
 @login_required
 def post_detail(request, pk):
     posts = Post.objects.filter(published=True).order_by('-created_at')[:3]
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'app/post_view.html', {'post': post, 'posts': posts})
+    return render(request, 'app/post_view.html', {'curr_post': post, 'posts': posts})
